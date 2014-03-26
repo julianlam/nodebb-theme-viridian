@@ -43,10 +43,13 @@
 <body>
 	<div class="nav-sidebar">
 		<div class="sidebar-header">
-			<div class="sidebar-close pull-right">&times;</div>
+			<div class="sidebar-close pull-right"><div>&times;</div></div>
 			<h2></h2>
 		</div>
-		<ul></ul>
+		<div class="sidebar-body">
+			<ul class="categories active"></ul><!--
+			--><ul class="topics"></ul>
+		</div>
 	</div>
 
 	<div class="navbar navbar-inverse navbar-fixed-top header" role="navigation" id="header-menu">

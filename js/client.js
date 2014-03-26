@@ -7,22 +7,22 @@
 	var attachEvents = function() {
 		var	sidebarEl = $('.nav-sidebar'),
 			toggleEl = $('.forum-logo, .forum-title'),
-			closeEl = sidebarEl.find('.sidebar-close');
+			closeEl = sidebarEl.find('.sidebar-close'),
+			backEl = sidebarEl.find('h2');
 
 		toggleEl.on('click', function() {
 			toggleSidebar();
 		});
 
 		sidebarEl.on('click', 'li[data-cid]', function() {
-			var	cid = this.getAttribute('data-cid');
-
-			ajaxify.go('category/' + cid);
-			toggleSidebar();
+			enterCategory(this.getAttribute('data-cid'));
 		});
 
 		closeEl.on('click', function() {
 			toggleSidebar(false);
 		});
+
+		backEl.on('click', goBack);
 	};
 
 	var	toggleSidebar = function(state) {
@@ -32,28 +32,54 @@
 
 		sidebarEl.toggleClass('active', state);
 		contentEl.toggleClass('active', state);
-		headerEl.toggleClass('active', state);	
-	}
+		headerEl.toggleClass('active', state);
+	};
 
 	var	getCategories = function() {
-		var	categoryContainer = $('.nav-sidebar > ul'),
+		var	categoryContainer = $('.nav-sidebar .categories'),
 			titleEl = $('.nav-sidebar h2');
 
-		titleEl.text('CATEGORIES');
+		titleEl.text('categories');
 
-		$.get(RELATIVE_PATH + '/api/home').success(function(returnData, status) {
-			if (status === 'success' && returnData.categories.length) {
-				var	categoryObj;
-
-				for(var x=0,numCats=returnData.categories.length;x<numCats;x++) {
-					categoryObj = returnData.categories[x];
-					categoryContainer.append($('<li data-cid="' + categoryObj.cid + '"><div class="count">' + categoryObj.topic_count + '</div><i class="fa fa-3x fa-fw ' + categoryObj.icon + '"></i><span class="sidebar-label">' + categoryObj.name + '</span><div class="clearfix"></div></li>'));
-				}
-			}
+		$.get(RELATIVE_PATH + '/api/home').success(function(returnData) {
+			templates.preload_template('home', function() {
+				var html = templates.prepare(templates['home'].toString()).parse(returnData);
+				categoryContainer.append(html);
+			});
 		});
 	};
 
-	$(document).ready(function() {
-		init();
-	});
+	var enterCategory = function(cid) {
+		var	categoryContainer = $('.nav-sidebar .categories'),
+			topicContainer = $('.nav-sidebar .topics'),
+			titleEl = $('.nav-sidebar h2');
+
+		titleEl.text('topics');
+
+		$.get(RELATIVE_PATH + '/api/category/' + cid).success(function(returnData) {
+			console.log(returnData);
+			templates.preload_template('category', function() {
+				var html = templates.prepare(templates['category'].toString()).parse(returnData);
+				topicContainer.empty().append(html);
+				categoryContainer.removeClass('active');
+				topicContainer.addClass('active');
+			});
+		});
+	};
+
+	var	goBack = function() {
+		var	categoryContainer = $('.nav-sidebar .categories'),
+			topicContainer = $('.nav-sidebar .topics'),
+			titleEl = $('.nav-sidebar h2');
+
+		if (topicContainer.hasClass('active')) {
+			titleEl.text('categories');
+			topicContainer.removeClass('active');
+			categoryContainer.addClass('active');
+		} else if (categoryContainer.hasClass('active')) {
+			toggleSidebar();
+		}
+	};
+
+	$(document).ready(init);
 })();
