@@ -1,7 +1,7 @@
 {
   "name": "nodebb-theme-bloglike",
   "version": "0.0.0",
-  "description": "derpderp",
+  "description": "Blog-like theme, inspired by Randy M. Daniel",
   "main": "theme.less",
   "repository": {
     "type": "git",

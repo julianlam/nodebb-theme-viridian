@@ -1,7 +1,7 @@
 {
     "id": "nodebb-theme-bloglike",
     "name": "Julian",
-    "description": "derpderp",
+    "description": "Blog-like theme, inspired by Randy M. Daniel",
     "url": "https://www.github.com/julianlam/nodebb-theme-bloglike",
     "screenshot": null,
     "templates": "templates",
