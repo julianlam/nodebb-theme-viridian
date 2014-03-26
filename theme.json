@@ -1,0 +1,9 @@
+{
+    "id": "nodebb-theme-bloglike",
+    "name": "Julian",
+    "description": "derpderp",
+    "url": "https://www.github.com/julianlam/nodebb-theme-bloglike",
+    "screenshot": null,
+    "templates": "templates",
+    "staticDir": "static"
+}

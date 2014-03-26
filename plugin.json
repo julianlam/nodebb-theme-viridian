@@ -1,0 +1,6 @@
+{
+	"id": "nodebb-theme-bloglike",
+	"scripts": [
+		"js/client.js"
+	]
+}

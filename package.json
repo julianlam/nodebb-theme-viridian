@@ -1,0 +1,27 @@
+{
+  "name": "nodebb-theme-bloglike",
+  "version": "0.0.0",
+  "description": "derpderp",
+  "main": "theme.less",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/julianlam/nodebb-theme-bloglike"
+  },
+  "keywords": [
+    "nodebb",
+    "lavender",
+    "theme",
+    "themes"
+  ],
+  "author": {
+    "name": "Julian Lam",
+    "email": "julian@nodebb.org"
+  },
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/julianlam/nodebb-theme-bloglike/issues"
+  },
+  "peerDependencies": {
+    "nodebb-theme-vanilla": "~0.0.15"
+  }
+}
