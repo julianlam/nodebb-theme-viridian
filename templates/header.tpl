@@ -34,7 +34,8 @@
 			paths: {
 				'forum': '../forum',
 				'vendor': '../../vendor',
-				'buzz': '../../vendor/buzz/buzz.min'
+				'buzz': '../../vendor/buzz/buzz.min',
+				'hammer': '../../plugins/nodebb-theme-bloglike/lib/hammer'
 			}
 		});
 	</script>

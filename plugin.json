@@ -2,5 +2,8 @@
 	"id": "nodebb-theme-bloglike",
 	"scripts": [
 		"js/client.js"
-	]
+	],
+	"staticDirs": {
+    	"lib": "js"
+    }
 }

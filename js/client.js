@@ -5,7 +5,10 @@
 	};
 
 	var attachEvents = function() {
-		var	sidebarEl = $('.nav-sidebar'),
+		var	contentEl = $('#content'),
+			sidebarEl = $('.nav-sidebar'),
+			categoryContainer = sidebarEl.find('.categories'),
+			topicContainer = sidebarEl.find('.topics'),
 			toggleEl = $('.forum-logo, .forum-title'),
 			closeEl = sidebarEl.find('.sidebar-close'),
 			backEl = sidebarEl.find('h2');
@@ -14,8 +17,21 @@
 			toggleSidebar();
 		});
 
-		sidebarEl.on('click', 'li[data-cid]', function() {
+		categoryContainer.on('click', 'li[data-cid]', function() {
 			enterCategory(this.getAttribute('data-cid'));
+		});
+
+		topicContainer.on('click', 'li[data-tid]', function() {
+			var	tid = this.getAttribute('data-tid');
+
+			ajaxify.go('topic/' + tid);
+			topicContainer.find('li').removeClass('active');
+			topicContainer.find('li[data-tid="' + tid + '"]').addClass('active');
+			toggleSidebar();
+		});
+
+		sidebarEl.find('ul').on('scroll', function(e) {
+			console.log(e);
 		});
 
 		closeEl.on('click', function() {
@@ -23,6 +39,30 @@
 		});
 
 		backEl.on('click', goBack);
+
+		$(window).one('action:ajaxify.end', function(data) {
+			// If we started in a topic, prepare the topic menu
+			var	cid = templates.get('category_id');
+			if (cid) {
+				enterCategory(cid);
+			}
+		});
+
+		$(window).on('resize', resizeSidebar);
+
+		// Swipe!
+		require(['hammer'], function(Hammer) {
+			Hammer(contentEl[0], {
+				drag_block_horizontal: true
+			}).on('swipeleft swiperight', function(e) {
+				e.gesture.preventDefault();
+				toggleSidebar(e.type === 'swiperight' ? true : false);
+			});
+
+			Hammer(sidebarEl[0], {
+				drag_block_horizontal: true
+			}).on('swiperight', goBack);
+		});
 	};
 
 	var	toggleSidebar = function(state) {
@@ -33,6 +73,16 @@
 		sidebarEl.toggleClass('active', state);
 		contentEl.toggleClass('active', state);
 		headerEl.toggleClass('active', state);
+	};
+
+	var resizeSidebar = function() {
+		var	sidebarEl = $('.nav-sidebar'),
+			categoryContainer = sidebarEl.find('.categories'),
+			topicContainer = sidebarEl.find('.topics');
+
+			console.log($(window).height());
+		categoryContainer.css('height', $(window).height() - 54);
+		topicContainer.css('height', $(window).height() - 54);
 	};
 
 	var	getCategories = function() {
@@ -51,19 +101,40 @@
 
 	var enterCategory = function(cid) {
 		var	categoryContainer = $('.nav-sidebar .categories'),
+			categoryEl = categoryContainer.find('[data-cid="' + cid + '"]'),
 			topicContainer = $('.nav-sidebar .topics'),
-			titleEl = $('.nav-sidebar h2');
+			titleEl = $('.nav-sidebar h2'),
+			iconClass = categoryEl.attr('class');
 
-		titleEl.text('topics');
+		// Highlight the active category
+		categoryContainer.find('li').removeClass('active');
+		categoryEl.addClass('active');
+
+		// Show topics list
+		categoryContainer.removeClass('active');
+		topicContainer.addClass('active');
+		topicContainer.empty().html('<li class="loading"><i class="fa fa-spin fa-refresh"></i> Loading Topics</li>');
 
 		$.get(RELATIVE_PATH + '/api/category/' + cid).success(function(returnData) {
-			console.log(returnData);
-			templates.preload_template('category', function() {
-				var html = templates.prepare(templates['category'].toString()).parse(returnData);
-				topicContainer.empty().append(html);
-				categoryContainer.removeClass('active');
-				topicContainer.addClass('active');
-			});
+			titleEl.html('<i class="' + iconClass + '"></i> ' + returnData.name).find('i').removeClass('fa-2x');
+			if (returnData.topics.length) {
+				templates.preload_template('category', function() {
+					var html = templates.prepare(templates['category'].toString()).parse(returnData);
+					topicContainer.empty().append(html);
+					topicContainer.find('.timeago').timeago();
+
+					// If a topic_id is present, highlight it
+					var	tid = templates.get('topic_id'),
+						topicEl = topicContainer.find('[data-tid="' + tid + '"]');
+					if (tid && topicEl) {
+						topicEl.addClass('active');
+					}
+				});
+			} else {
+				translator.translate('<li class="empty">[[topic:no_topics_found]]</li>', function(translated) {
+					topicContainer.empty().html(translated);
+				});
+			}
 		});
 	};
 
