@@ -1,8 +1,8 @@
 {
-    "id": "nodebb-theme-bloglike",
-    "name": "Julian",
-    "description": "Blog-like theme, inspired by Randy M. Daniel",
-    "url": "https://www.github.com/julianlam/nodebb-theme-bloglike",
+    "id": "nodebb-theme-viridian",
+    "name": "Viridian",
+    "description": "Topic-centric theme, inspired by Randy M. Daniel (http://dribbble.com/shots/1475703-NodeBB-Theme/attachments/220168)",
+    "url": "https://www.github.com/julianlam/nodebb-theme-viridian",
     "screenshot": null,
     "templates": "templates"
 }

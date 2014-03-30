@@ -1,15 +1,15 @@
 {
-  "name": "nodebb-theme-bloglike",
+  "name": "nodebb-theme-viridian",
   "version": "0.0.0",
-  "description": "Blog-like theme, inspired by Randy M. Daniel",
+  "description": "Topic-centric theme, inspired by Randy M. Daniel (http://dribbble.com/shots/1475703-NodeBB-Theme/attachments/220168)",
   "main": "theme.less",
   "repository": {
     "type": "git",
-    "url": "https://github.com/julianlam/nodebb-theme-bloglike"
+    "url": "https://github.com/julianlam/nodebb-theme-viridian"
   },
   "keywords": [
     "nodebb",
-    "lavender",
+    "viridian",
     "theme",
     "themes"
   ],
@@ -19,7 +19,7 @@
   },
   "license": "BSD-2-Clause",
   "bugs": {
-    "url": "https://github.com/julianlam/nodebb-theme-bloglike/issues"
+    "url": "https://github.com/julianlam/nodebb-theme-viridian/issues"
   },
   "peerDependencies": {
     "nodebb-theme-vanilla": "~0.0.15"

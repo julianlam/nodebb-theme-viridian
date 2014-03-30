@@ -42,7 +42,7 @@
 
 		$(window).one('action:ajaxify.end', function(data) {
 			// If we started in a topic, prepare the topic menu
-			var	cid = templates.get('category_id');
+			var	cid = ajaxify.variables.get('category_id');
 			if (cid) {
 				enterCategory(cid);
 			}
@@ -92,8 +92,7 @@
 		titleEl.text('categories');
 
 		$.get(RELATIVE_PATH + '/api/home').success(function(returnData) {
-			templates.preload_template('home', function() {
-				var html = templates.prepare(templates['home'].toString()).parse(returnData);
+			templates.parse('sidebar-home', returnData, function(html) {
 				categoryContainer.append(html);
 			});
 		});
@@ -118,13 +117,12 @@
 		$.get(RELATIVE_PATH + '/api/category/' + cid).success(function(returnData) {
 			titleEl.html('<i class="' + iconClass + '"></i> ' + returnData.name).find('i').removeClass('fa-2x');
 			if (returnData.topics.length) {
-				templates.preload_template('category', function() {
-					var html = templates.prepare(templates['category'].toString()).parse(returnData);
+				templates.parse('sidebar-category', returnData, function(html) {
 					topicContainer.empty().append(html);
 					topicContainer.find('.timeago').timeago();
 
 					// If a topic_id is present, highlight it
-					var	tid = templates.get('topic_id'),
+					var	tid = ajaxify.variables.get('topic_id'),
 						topicEl = topicContainer.find('[data-tid="' + tid + '"]');
 					if (tid && topicEl) {
 						topicEl.addClass('active');
