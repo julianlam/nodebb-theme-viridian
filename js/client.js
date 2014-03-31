@@ -114,17 +114,8 @@
 		$.get(RELATIVE_PATH + '/api/category/' + cid).success(function(returnData) {
 			titleEl.html('<i class="' + iconClass + '"></i> ' + returnData.name).find('i').removeClass('fa-2x');
 			if (returnData.topics.length) {
-				templates.parse('sidebar-category', returnData, function(html) {
-					topicContainer.empty().append(html).attr('data-cid', returnData.cid);
-					topicContainer.find('.timeago').timeago();
-
-					// If a topic_id is present, highlight it
-					var	tid = ajaxify.variables.get('topic_id'),
-						topicEl = topicContainer.find('[data-tid="' + tid + '"]');
-					if (tid && topicEl) {
-						topicEl.addClass('active');
-					}
-				});
+				topicContainer.find('.loading').remove();
+				populateTopicList(returnData);
 			} else {
 				translator.translate('<li class="empty">[[topic:no_topics_found]]</li>', function(translated) {
 					topicContainer.empty().html(translated);
@@ -134,13 +125,37 @@
 	};
 
 	var	loadMoreTopics = function(cid, after) {
+		var	topicContainer = $('.nav-sidebar .topics'),
+			moreEl = topicContainer.find('.more');
+
+		moreEl.html('<p>Loading <i class="fa fa-spin fa-refresh"></i>').addClass('active');
+
 		socket.emit('categories.loadMore', {
 			cid: parseInt(cid, 10),
 			after: parseInt(after, 10)
 		}, function (err, data) {
-			console.log(err, data);
+			if (!err) {
+				topicContainer.find('.more').remove();
+				populateTopicList(data);
+			}
 		});
 	};
+
+	var populateTopicList = function(data) {
+		var	topicContainer = $('.nav-sidebar .topics');
+
+		templates.parse('sidebar-category', data, function(html) {
+			topicContainer.append(html).attr('data-cid', data.cid);
+			topicContainer.find('.timeago').timeago();
+
+			// If a topic_id is present, highlight it
+			var	tid = ajaxify.variables.get('topic_id'),
+				topicEl = topicContainer.find('[data-tid="' + tid + '"]');
+			if (tid && topicEl) {
+				topicEl.addClass('active');
+			}
+		});
+	}
 
 	var	goBack = function() {
 		var	categoryContainer = $('.nav-sidebar .categories'),
