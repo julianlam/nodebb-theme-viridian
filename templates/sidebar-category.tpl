@@ -10,3 +10,6 @@
 	<div class="clearfix"></div>
 </li>
 <!-- END topics -->
+<li class="more">
+	<p>See More</p>
+</li>

@@ -35,7 +35,7 @@
 				'forum': '../forum',
 				'vendor': '../../vendor',
 				'buzz': '../../vendor/buzz/buzz.min',
-				'hammer': '../../plugins/nodebb-theme-bloglike/lib/hammer'
+				'hammer': '../../plugins/nodebb-theme-viridian/lib/hammer'
 			}
 		});
 	</script>
