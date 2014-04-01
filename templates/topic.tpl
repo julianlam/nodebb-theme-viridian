@@ -10,14 +10,23 @@
 <input type="hidden" template-variable="postcount" value="{postcount}" />
 <input type="hidden" template-variable="viewcount" value="{viewcount}" />
 
-<div class="veridian-topic">
+<div class="viridian-topic">
 	<ul>
 		<!-- BEGIN posts -->
 		<li data-pid="{posts.pid}">
-			<div class="row">
+			<div class="row post">
 				<div class="col-sm-2 meta">
+					<img src="{posts.user.picture}" title="{posts.user.username}" class="img-circle" />
+					<div>
+						<p class="username">{posts.user.username}</p>
+						<p class="timestamp"><span class="timeago" title="{posts.relativeTime}"></span></p>
+						<p class="category">{category.name}</p>
+					</div>
 				</div>
 				<div class="col-sm-10">
+					<!-- IF @first -->
+					<h1>{title}</h1>
+					<!-- ENDIF @first -->
 					{posts.content}
 				</div>
 			</div>
