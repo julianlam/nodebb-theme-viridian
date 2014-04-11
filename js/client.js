@@ -2,6 +2,10 @@
 	var	init = function() {
 		attachEvents();
 		getCategories();
+
+		require(['pace'], function(pace) {
+			pace.start();
+		});
 	};
 
 	var attachEvents = function() {
