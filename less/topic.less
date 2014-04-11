@@ -1,50 +1,69 @@
 .viridian-topic {
-	li[data-pid] {
-		list-style-type: none;
-		padding: 2em 0 2em 100px;
-		border-bottom: 1px solid #ddd;
+	.header {
+		max-height: 500px;
+		background-size: cover;
+		width: 100%;
+		position: relative;
+		top: -18px;
+	}
 
-		.post {
-			.meta {
-				text-align: right;
+	ul {
+		padding: 0 2em;
+		max-width: 1200px;
+		margin: 0 auto;
 
-				img {
-					width: 48px;
+		li[data-pid] {
+			list-style-type: none;
+			padding: 2em 0 2em 100px;
+			border-bottom: 1px solid #ddd;
+
+			.post-row {
+				.meta {
+					text-align: right;
+
+					img {
+						width: 48px;
+					}
+
+					> div {
+						border-right: 1px solid #ddd;
+						padding: 1em 1em 1em 0;
+						margin-top: 1em;
+
+						p {
+							margin: 0;
+
+							&.name {
+								font-weight: 700;
+							}
+
+							&.timestamp {
+								color: lighten(#333, 30%);
+								font-size: 12px;
+							}
+						}
+					}
 				}
+			}
 
-				> div {
-					border-right: 1px solid #ddd;
-					padding: 1em 1em 1em 0;
+			&:first-child {
+				padding-left: 0;
+				padding-right: 0;
 
-					p {
-						margin: 0;
+				.meta {
+					img {
+						width: 100px;
+					}
 
-						&.name {
-							font-weight: 700;
-						}
-
-						&.timestamp {
-							color: lighten(#333, 30%);
-							font-size: 12px;
-						}
+					> div {
+						padding: 2em 2em 2em 0;
 					}
 				}
 			}
 		}
 
-		&:first-child {
-			padding-left: 0;
-			padding-right: 0;
-
-			.meta {
-				img {
-					width: 100px;
-				}
-
-				> div {
-					padding: 2em 2em 2em 0;
-				}
-			}
+		li.post-bar {
+			list-style-type: none;
 		}
 	}
 }
