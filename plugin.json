@@ -1,9 +1,15 @@
 {
 	"id": "nodebb-theme-viridian",
+	"library": "lib/theme.js",
 	"scripts": [
 		"js/client.js"
 	],
 	"staticDirs": {
     	"lib": "js"
-    }
+    },
+    "hooks": [
+		{
+			"hook": "filter:widgets.getAreas", "method": "defineWidgetAreas", "callbacked": true
+		}
+	]
 }

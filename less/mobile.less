@@ -1,0 +1,21 @@
+@media (max-width: @screen-xs-max) {
+	.nav-sidebar {
+		left: -@sidebar-width-mobile;
+		width: @sidebar-width-mobile;
+
+		.sidebar-body {
+			ul {
+				min-width: @sidebar-width-mobile;
+				// .transition(none);
+
+				&.categories {
+					left: -@sidebar-width-mobile;
+				}
+
+				&.topics.active {
+					left: -@sidebar-width-mobile;
+				}
+			}
+		}
+	}
+}

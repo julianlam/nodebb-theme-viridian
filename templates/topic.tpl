@@ -12,7 +12,9 @@
 
 <div class="viridian-topic">
 	<!-- IF thumb -->
-	<img class="header" src="{thumb}" />
+	<div class="header" style="background-image: url({thumb});">
+		<h1 class="title">{title}</h1>
+	</div>
 	<!-- ENDIF thumb -->
 	<ul id="post-container">
 		<!-- BEGIN posts -->
