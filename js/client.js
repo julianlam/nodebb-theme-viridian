@@ -92,7 +92,7 @@
 
 		titleEl.text('categories');
 
-		$.get(RELATIVE_PATH + '/api/home').success(function(returnData) {
+		$.get(RELATIVE_PATH + '/api/categories').success(function(returnData) {
 			templates.parse('sidebar-home', returnData, function(html) {
 				categoryContainer.append(html);
 			});

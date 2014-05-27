@@ -8,8 +8,6 @@
     	"lib": "js"
     },
     "hooks": [
-		{
-			"hook": "filter:widgets.getAreas", "method": "defineWidgetAreas", "callbacked": true
-		}
+		{ "hook": "action:app.load", "method": "init" }
 	]
 }
